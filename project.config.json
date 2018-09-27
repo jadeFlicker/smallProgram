@@ -8,8 +8,8 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"appid": "wxc4bbfba9a2c5ad93",
-	"projectname": "manager",
+	"appid": "wxd17d7a4613908cfa",
+	"projectname": "todo",
 	"miniprogramRoot": "./dist",
 	"condition": {}
 }

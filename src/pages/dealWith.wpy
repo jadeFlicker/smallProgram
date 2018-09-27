@@ -1,0 +1,85 @@
+<style lang="scss">
+  .header image{
+    height: 100rpx;
+    width:100rpx;
+    border-radius: 50%;
+  }
+  .header{
+    justify-content: space-between;
+    margin-left: 52rpx;
+    margin-right: 64rpx;
+    margin-top: 34rpx;
+  }
+  .date{
+    font-weight:600;
+  }
+  .data_detail{
+    flex-direction: column;
+    color: #9E9E9E;
+    align-items: flex-start;
+    margin-left: 16rpx;
+    font-size: 28rpx;
+  }
+  .prompt{
+    color: #757575;
+    font-size: 28rpx;
+    font-weight: 500;
+    margin-left: 52rpx;
+    margin-top: 16rpx;
+    justify-content: flex-start;
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="flex header">
+      <view class="flex date">
+          <view style="color:#212121;font-size:72rpx;">4</view>
+          <view class="flex data_detail">
+              <view>2018年9月</view>
+              <view>星期二</view>
+          </view>
+      </view>
+      <image style="" src="http://img3.imgtn.bdimg.com/it/u=108228188,2741176027&fm=27&gp=0.jpg" ></image>
+    </view>
+    <view class="flex prompt">
+      <view style='margin-right:32px;'>3条已完成</view>
+      <view >5条已完成</view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+  @connect({
+
+  })
+
+  export default class news extends wepy.page {
+    config = {
+      navigationBarTitleText: '兔do'
+    }
+    components = {
+
+    }
+
+    data = {
+
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+
+    }
+
+    events = {
+
+    }
+
+    onLoad() {
+    }
+  }
+</script>
