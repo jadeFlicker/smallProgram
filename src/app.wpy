@@ -19,14 +19,44 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/dealWith'
+      'pages/dealWith',
+      'pages/task_details',
+      'pages/growth_record',
+      'pages/editor',
+      'pages/create_task',
+      'pages/create_record',
+      'pages/switch_group'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
-    }
+    },
+    "tabBar": {
+       color:'#424242',
+       selectedColor:'#3D50DF',
+       "list": [
+         {
+           'iconPath':'static/tabbar/taskbar.png',
+           'selectedIconPath':'static/tabbar/task_active.png',
+           "pagePath": "pages/dealWith",
+           "text": "任务"
+         },
+         {
+           'iconPath':'static/tabbar/record.png',
+           'selectedIconPath':'static/tabbar/record_active.png',
+           "pagePath": "pages/growth_record",
+           "text": "成长记录"
+         },
+         {
+           'iconPath':'static/tabbar/mine.png',
+           'selectedIconPath':'static/tabbar/mine_active.png',
+           "pagePath": "pages/dealWith",
+           "text": "我的"
+         }
+       ]
+     }
   }
 
   globalData = {
@@ -39,21 +69,9 @@ export default class extends wepy.app {
   }
 
   onLaunch() {
-    this.testAsync()
+
   }
 
-  sleep (s) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('promise resolved')
-      }, s * 1000)
-    })
-  }
-
-  async testAsync () {
-    const data = await this.sleep(3)
-    console.log(data)
-  }
 
   getUserInfo(cb) {
     const that = this

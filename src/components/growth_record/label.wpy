@@ -1,0 +1,59 @@
+<style lang="scss">
+  .label_box{
+    justify-content: flex-start;
+
+  }
+  .label_list{
+    background:rgba(74,144,226,0.1);
+    border-radius:6px;
+    font-size:22rpx;
+    font-weight:600;
+    padding: 6rpx;
+    color:#4A90E2;
+    margin-right: 8rpx;
+  }
+</style>
+<template>
+  <view class="flex label_box">
+    <view class="label_list">数学</view>
+    <view class="label_list">学校作业</view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+
+
+  @connect({
+
+  })
+
+  export default class Counter extends wepy.component {
+    props = {
+      // num: {
+      //   type: [Number, String],
+      //   coerce: function (v) {
+      //
+      //   },
+      //   default:
+      // }
+    }
+
+    data = {
+
+    }
+    events = {
+
+    }
+
+    watch = {
+
+    }
+
+    methods = {
+
+    }
+    onLoad () {
+    }
+  }
+</script>

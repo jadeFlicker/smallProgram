@@ -1,0 +1,156 @@
+<style lang="scss">
+  .Mic_box{
+    height: 140rpx;
+    width: 140rpx;
+    margin-right: 30rpx;
+    border:2px solid rgba(238,238,238,1);
+  }
+  //录音模块
+  .vioce_end_box{
+    height:110rpx;
+    background:rgba(255,255,255,1);
+    border-radius:55rpx;
+    border:2rpx solid rgba(190,219,253,1);
+    margin-bottom: 48rpx;
+    position: relative;
+    justify-content: flex-start;
+  }
+  .voice_tag_btn{
+
+    height: 68rpx;
+    width: 68rpx;
+    border-radius: 50%;
+    margin-left:24rpx;
+  }
+  .voice_cancal{
+    position: absolute;
+    top: -16rpx;
+    right: 12rpx;
+    height: 32rpx;
+    width: 32rpx;
+    border-radius: 50%;
+
+  }
+  .voice_time_active,.voice_time_all{
+    font-size:24rpx;
+    font-weight:300;
+    color:rgba(66,66,66,1);
+    line-height:34rpx;
+  }
+  .voice_time_active{
+    margin-left: 16rpx;
+  }
+  .active_line_box{
+    margin-left: 16rpx;
+    position: relative;
+  }
+  .active_line{
+    width: 362rpx;
+    height: 2px;
+    background: rgba(151,151,151,0.2638)
+  }
+  .voice_time_all{
+    margin-left: 32rpx;
+  }
+  .microphone_camera_btn{
+    justify-content: flex-start;
+  }
+  .active_point{
+    position: absolute;
+    left: 0rpx;
+    width:20rpx;
+    height:20rpx;
+    background:rgba(74,144,226,1);
+    border-radius: 50%;
+  }
+  // 图片模块
+  .img_box{
+    justify-content: flex-start;
+  }
+  .img_box_list{
+    position: relative;
+    margin-right: 36rpx;
+  }
+  .img_cancal{
+    position: absolute;
+    top: 8rpx;
+    right: 8rpx;
+    height: 32rpx;
+    width: 32rpx;
+    border-radius: 50%;
+  }
+</style>
+<template>
+  <view>
+    <!-- 录音结束 -->
+      <view class="flex vioce_end_box">
+
+          <image class="voice_cancal" src="../../static/img/canclex.png"></image>
+
+        <image class="voice_tag_btn" src="../../static/img/play.png"></image>
+
+        <view class="voice_time_active">00:00</view>
+        <view class="flex active_line_box">
+            <view class="active_line"></view>
+            <view class="active_point"></view>
+        </view>
+        <view class="voice_time_all">00:58</view>
+      </view>
+      <!-- 录音开始 -->
+      <view class="vioce_start_box">
+
+      </view>
+      <view class="flex img_box">
+        <view class="img_box_list">
+
+            <image class="img_cancal"  src="../../static/img/canclex.png"></image>
+
+          <image style="height:144rpx;width:144rpx;" src="http://img1.imgtn.bdimg.com/it/u=3184725220,1179305695&fm=11&gp=0.jpg"></image>
+        </view>
+        <view class="img_box_list">
+
+          <image class="img_cancal"  src="../../static/img/canclex.png"></image>
+
+          <image style="height:144rpx;width:144rpx;" src="http://img1.imgtn.bdimg.com/it/u=3184725220,1179305695&fm=11&gp=0.jpg"></image>
+        </view>
+      </view>
+      <view class="flex microphone_camera_btn">
+        <view class="flex Mic_box" @tap='create_camera'>
+          <image style="height:76rpx;width:76rpx;" src="../../static/img/camera.png"></image>
+        </view>
+        <view class="flex Mic_box" @tap='create_voice'>
+          <image style="height:76rpx;width:76rpx;" src="../../static/img/voice.png"></image>
+        </view>
+      </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class CameraMicrophone extends wepy.component {
+    props = {
+
+    }
+
+    data = {
+    }
+    events = {
+
+    }
+
+    watch = {
+
+    }
+
+    methods = {
+      create_camera:()=>{
+        console.log('====');
+      },
+      create_voice:()=>{
+        console.log('====///');
+      }
+    }
+    onLoad () {
+    }
+  }
+</script>

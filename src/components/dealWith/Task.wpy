@@ -1,0 +1,81 @@
+<style lang="scss">
+  .task{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background:rgba(255,255,255,0.6970999999999999);
+    .btn{
+      background:#EFF2F4;
+    }
+    .createTask,.createRecord{
+      position: absolute;
+      right: 160rpx;
+      bottom: 320rpx;
+      width:240rpx;
+      height:88rpx;
+      background:rgba(255,255,255,1);
+      box-shadow:0rpx 8rpx 40rpx 0rpx rgba(20,78,145,0.2);
+      border-radius:62rpx 62rpx 4rpx 62rpx;
+      font-size:28rpx;
+      font-weight:400;
+      color:rgba(66,66,66,1);
+    }
+    .createRecord{
+      bottom: 200rpx;
+    }
+  }
+</style>
+<template>
+    <view class="task" wx:if='{{tag}}'>
+      <view class="flex createTask">
+        <image style="height:44rpx;width:44rpx;margin-right:22rpx;" src="../../static/img/task.png"></image>
+        <view @tap='create_task'>创建任务</view>
+      </view>
+      <view class="flex createRecord">
+        <image style="height:38rpx;width:36rpx;margin-right:22rpx;" src="../../static/img/record.png"></image>
+        <view @tap='create_record'>创建记录</view>
+      </view>
+      <view class="flex btn" @tap='tag_modal'>
+        <image style="height:36rpx;width:36rpx;" mode="" src="../../static/img/x.png" ></image>
+      </view>
+    </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Task extends wepy.component {
+
+    data = {
+      tag:false
+    }
+    events = {
+      _tag_modal(){
+        this.methods.tag_modal();
+      }
+    }
+
+    watch = {
+
+    }
+
+    methods = {
+      tag_modal:()=>{
+        this.tag=!this.tag;
+      },
+      create_task:()=>{
+        wx.navigateTo({
+          url:'/pages/create_task'
+        });
+      },
+      create_record:()=>{
+        wx.navigateTo({
+          url:'/pages/create_record'
+        });
+      }
+    }
+    onLoad () {
+    }
+  }
+</script>

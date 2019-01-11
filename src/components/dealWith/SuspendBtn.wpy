@@ -1,0 +1,45 @@
+<style lang="scss">
+  .btn{
+    width:108rpx;
+    height:108rpx;
+    background:linear-gradient(219deg,rgba(59,137,255,1) 0%,rgba(121,174,255,1) 100%);
+    position: fixed;
+    right: 64rpx;
+    bottom: 74rpx;
+    border-radius: 50%;
+  }
+</style>
+<template>
+  <view class="flex btn" @tap='tag_modal'>
+    <image style="width:52rpx;height:54rpx;" mode="" src="../../static/img/pen.png"></image>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+
+  @connect({
+
+  })
+
+  export default class SuspendBtn extends wepy.component {
+
+    data = {
+    }
+    events = {
+
+    }
+
+    watch = {
+
+    }
+
+    methods = {
+      tag_modal(){
+        this.$emit('tag');
+      }
+    }
+    onLoad () {
+    }
+  }
+</script>

@@ -1,0 +1,177 @@
+<style lang="scss">
+  .date{
+    width:352rpx;
+    height:60rpx;
+    background:rgba(220,236,255,0.5368999999999999);
+    border-radius:0rpx 200rpx 200rpx 0rpx;
+
+    font-size:28rpx;
+    font-weight:400;
+    color:rgba(74,144,226,1);
+    margin:24rpx 0rpx 48rpx;
+  }
+  .c_box{
+    margin: 0rpx 32rpx;
+  }
+  // 头部
+  .user_box{
+    justify-content: flex-start;
+  }
+  .portrait{
+    height: 80rpx;
+    width: 80rpx;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 32rpx;
+  }
+  .user_info{
+    font-size:28rpx;
+    font-weight:600;
+    color:rgba(66,66,66,1);
+  }
+  .task_time{
+    font-size:24rpx;
+    font-weight:400;
+    color:rgba(158,158,158,1);
+  }
+
+  // 任务task
+  .tk{
+      margin: 32rpx 32rpx 16px;
+      .tk_title_box{
+        justify-content: flex-start;
+      }
+      .tk_title{
+          margin-left: 14rpx;
+          font-size:28rpx;
+          font-weight:600;
+          color:rgba(66,66,66,1);
+      }
+      //标签
+      .tk_label_box{
+        justify-content: flex-start;
+        .tk_label_list{
+          background:rgba(74,144,226,0.1);
+          padding:0rpx 10rpx;
+          font-size:22rpx;
+          font-weight:600;
+          color:rgba(74,144,226,1);
+          border-radius:6px;
+        }
+      }
+
+      .img_box{
+        margin: 28rpx 0rpx 32rpx;
+        justify-content: space-between;
+      }
+      //评论
+      .comments_box{
+          .cot_title{
+            padding-left: 32rpx;
+            height: 72rpx;
+            justify-content: flex-start;
+            align-items:flex-start;
+            border-bottom: 2rpx solid #eee;
+          }
+          .cot_exceptional{
+            height: 118rpx;
+            justify-content: space-between;
+            .friend_portrait image{
+                border-radius: 50%;
+            }
+            .friend_portrait_text{
+                font-size:28rpx;
+                font-weight:400;
+                color:rgba(117,117,117,1);
+                margin-left: 16rpx;
+            }
+            .portrait_btn{
+              width:148rpx;
+              height:64rpx;
+              border-radius:12rpx;
+              border:2rpx solid rgba(255,194,64,1);
+
+              font-size:28rpx;
+              font-weight:600;
+              color:rgba(255,194,64,1);
+            }
+          }
+      }
+  }
+
+</style>
+<template>
+  <view class="container">
+    <view class="flex date">今天 12月04日 星期二</view>
+    <view class="c_box">
+        <view class="flex user_box">
+          <view class="portrait">
+            <open-data type="userAvatarUrl" style="height:100rpx;width:100rpx;"></open-data>
+          </view>
+          <view class="user_info">
+            <open-data type="userNickName"></open-data>
+            <view class="task_time">8分钟前</view>
+          </view>
+        </view>
+    </view>
+    <view class="tk">
+        <view class="flex tk_title_box">
+          <image style="height:32rpx;width:24rpx;" src="../static/img/red_flag.png" ></image>
+          <view class="tk_title">Adwords Keyword Resear For Beginners</view>
+        </view>
+
+        <view class="flex tk_label_box">
+          <view class="tk_label_list">数学</view>
+        </view>
+
+        <view class="flex img_box">
+          <image style="height:220rpx;width:220rpx;" src="http://img1.imgtn.bdimg.com/it/u=3184725220,1179305695&fm=11&gp=0.jpg"></image>
+          <image style="height:220rpx;width:220rpx;" src="http://img1.imgtn.bdimg.com/it/u=3184725220,1179305695&fm=11&gp=0.jpg"></image>
+          <image style="height:220rpx;width:220rpx;" src="http://img1.imgtn.bdimg.com/it/u=3184725220,1179305695&fm=11&gp=0.jpg"></image>
+        </view>
+
+        <view class="comments_box">
+          <view class="cot_title">
+            <image style="height:40rpx;width:40rpx;margin-right:80rpx;" src="../static/img/praise.png" ></image>
+            <image style="height:40rpx;width:40rpx;" src="../static/img/comments.png" ></image>
+          </view>
+          <view class="flex cot_exceptional">
+              <view class="flex">
+                  <view class="friend_portrait">
+                      <image style="height:48rpx;width:48rpx;" src="http://img1.imgtn.bdimg.com/it/u=3184725220,1179305695&fm=11&gp=0.jpg"></image>
+                      <image style="height:48rpx;width:48rpx;" src="http://img1.imgtn.bdimg.com/it/u=3184725220,1179305695&fm=11&gp=0.jpg"></image>
+                  </view>
+                  <view class="friend_portrait_text">5位好友已打赏</view>
+              </view>
+              <view class="flex portrait_btn">立即打赏</view>
+          </view>
+        </view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class news extends wepy.page {
+    config = {
+      navigationBarTitleText: '成长记录'
+    }
+    components = {
+
+    }
+    data = {
+
+    }
+    computed = {
+
+    }
+    methods = {
+
+    }
+    events = {
+
+    }
+    onLoad() {
+    }
+  }
+</script>

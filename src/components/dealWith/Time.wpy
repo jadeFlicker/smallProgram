@@ -1,0 +1,167 @@
+<style lang="scss">
+  .swiper_box{
+    height: 168rpx;
+    box-shadow:0px 6px 40rpx -6px rgba(43,84,131,0.1);
+  }
+  .weeks,.days{
+    font-size: 28rpx;
+    color: #757575;
+    font-weight: 400;
+    justify-content: space-between;
+    padding: 0rpx 48rpx 0rpx 44rpx;
+    margin-top: 64rpx;
+  }
+  .days{
+    margin-top: 0;
+    padding-left: 56rpx;
+    padding-right: 58rpx;
+  }
+  .active{
+    color:#5F9EFF;
+  }
+
+  .triangle{
+    position: absolute;
+    top:135rpx;
+    border-bottom: 10rpx solid #5F9EFF;
+    border-top: 10rpx solid transparent;
+    border-left: 10rpx solid transparent;
+    border-right: 10rpx solid transparent;
+    height: 0;
+    width: 0;
+  }
+</style>
+<template>
+  <swiper class="swiper_box" current='2'>
+    <block wx:for="{{days}}" wx:key='{{idx}}' wx:for-index="idx">
+      <swiper-item>
+        <view class="flex weeks">
+          <view class="flex" style='flex-direction: column;' wx:for='{{week_days}}' wx:key='{{index}}' @tap='check_date'  data-idx="{{idx}}" data-index="{{index}}">
+            <view wx:if="{{days[idx][index].title_state}}" class="{{days[idx][index].state?'active':''}}">Today</view>
+            <view wx:else class="{{days[idx][index].state?'active':''}}">{{item.week}}</view>
+
+            <view class="{{days[idx][index].state?'active':''}}">{{days[idx][index].day}}</view>
+            <view wx:if="{{days[idx][index].state}}" class="triangle"></view>
+          </view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+</template>
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+
+  export default class Time extends wepy.component {
+    props = {
+
+    }
+
+    data = {
+      week_days:[
+        {
+          week:'周一'
+        },
+        {
+          week:'周二'
+        },
+        {
+          week:'周三'
+        },
+        {
+          week:'周四'
+        },
+        {
+          week:'周五'
+        },
+        {
+          week:'周六'
+        },
+        {
+          week:'周日'
+        }
+      ],
+      days:[],
+      check_date:[]
+    }
+    events = {
+      //初始化日期
+      set_day:()=>{
+        let start=1;
+        let time_interval=86400000;
+        let nowTime=new Date();
+        let time_parme=`${nowTime.getFullYear()}/${nowTime.getMonth()+1}/${nowTime.getDate()}`;
+        let weekDays=Number(nowTime.getDay());
+
+        if (weekDays==0) {//当是周日时转为7;
+          weekDays=7;
+        }
+
+        let tempArryTime=[];
+        const left_time=(time,num)=>{
+          for (let i = 0; i <num; i++) {
+            let temp_time=new Date(time).getTime()-(i+1)*time_interval;
+            let tempObj={
+              title_state:false,
+              state:false,
+              date:'2018',
+              day:new Date(temp_time).getDate()<10?'0'+new Date(temp_time).getDate():new Date(temp_time).getDate()
+            };
+            tempArryTime.unshift(tempObj);
+          }
+        }
+
+        tempArryTime.push({
+          title_state:true,
+          state:true,
+          date:'2018',
+          day:nowTime.getDate()<10?'0'+nowTime.getDate():nowTime.getDate()
+        });
+        const right_time=(time,num)=>{
+          for (let i = 0; i <num; i++) {
+            let temp_time=new Date(time).getTime()+(i+1)*time_interval;
+            let tempObj={
+              title_state:false,
+              state:false,
+              date:'2018',
+              day:new Date(temp_time).getDate()<10?'0'+new Date(temp_time).getDate():new Date(temp_time).getDate()
+            };
+            tempArryTime.push(tempObj);
+          }
+        }
+
+        // let test=new Date('2018/2/32').getTime();
+
+        left_time(time_parme,13+weekDays);
+        right_time(time_parme,21-weekDays);
+        tempArryTime=[
+          tempArryTime.slice(0,7),
+          tempArryTime.slice(7,14),
+          tempArryTime.slice(14,21),
+          tempArryTime.slice(21,28),
+          tempArryTime.slice(28,35)
+        ]
+        this.days=tempArryTime;
+        this.$apply();
+      }
+    }
+
+    watch = {
+
+    }
+
+    methods = {
+      check_date:(e)=>{
+        this.days.map(item=>{
+          item.map(item=>{
+            item.state=false;
+          })
+        })
+        this.days[e.currentTarget.dataset.idx][e.currentTarget.dataset.index].state=true;
+      }
+    }
+    onLoad () {
+      this.events.set_day();
+    }
+  }
+</script>

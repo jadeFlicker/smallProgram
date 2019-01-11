@@ -1,0 +1,79 @@
+<style lang="scss">
+  .container{
+    margin: 0rpx 32rpx;
+
+    .release_btn{
+      width:682rpx;
+      height:88rpx;
+      background:linear-gradient(219deg,rgba(59,137,255,1) 0%,rgba(121,174,255,1) 100%);
+      border-radius:8rpx;
+      font-size:36rpx;
+      font-weight:600;
+      color:rgba(255,255,255,1);
+      line-height:50rpx;
+      letter-spacing:2rpx;
+      position: fixed;
+      bottom: 92rpx;
+      z-index: 999;
+    }
+    .release_btn_shadow{
+      bottom: 72rpx;
+      width:618rpx;
+      height:88rpx;
+      background:linear-gradient(219deg,rgba(59,137,255,1) 0%,rgba(121,174,255,1) 100%);
+      border-radius:8rpx;
+      opacity:0.7029000000000001;
+      filter:blur(10px);
+      z-index: 99;
+      left: 64rpx;
+    }
+  }
+</style>
+<template>
+  <view class="container">
+    <view style='margin-top:44rpx;'>
+      <textarea/>
+      <cameraMicrophone/>
+    </view>
+    <view class="flex release_btn">发布</view>
+    <view class="release_btn release_btn_shadow"></view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Camera_microphone from '../components/create/Camera_microphone'
+
+  import Textarea from '../components/create/Textarea'
+
+  export default class create_record extends wepy.page {
+    config = {
+      navigationBarTitleText: 'create_record'
+    }
+    components = {
+      cameraMicrophone:Camera_microphone,
+      textarea:Textarea
+    }
+
+
+
+    data = {
+
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+
+    }
+
+    events = {
+
+    }
+
+    onLoad() {
+    }
+  }
+</script>

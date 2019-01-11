@@ -1,8 +1,18 @@
 <style lang="scss">
+  page,.container{
+    height: 100%;
+    overflow: scroll;
+  }
   .header image{
     height: 100rpx;
     width:100rpx;
     border-radius: 50%;
+  }
+  .top{
+    position: fixed;
+    top: 0rpx;
+    width: 100%;
+    background: #fff;
   }
   .header{
     justify-content: space-between;
@@ -28,29 +38,134 @@
     margin-top: 16rpx;
     justify-content: flex-start;
   }
+  .content{
+    margin-top: 286rpx;
+  }
+  .weeks,.days{
+    font-size: 28rpx;
+    color: #757575;
+    font-weight: 400;
+    justify-content: space-between;
+    padding: 0rpx 48rpx 0rpx 44rpx;
+    margin-top: 64rpx;
+  }
+  .days{
+    margin-top: 0;
+    padding-left: 56rpx;
+    padding-right: 58rpx;
+  }
+  .swiper_box{
+    height: 168rpx;
+    box-shadow:0px 6px 40rpx -6px rgba(43,84,131,0.1);
+  }
+
+  .list{
+    padding: 36rpx 40rpx 32rpx 48rpx;
+    justify-content: flex-start;
+  }
+  .list_title_img{
+    height:32rpx;
+    width:32rpx;
+    margin-right:48rpx;
+    align-self: flex-start;
+    flex-shrink:0;
+  }
+
+  .list_detail{
+    justify-content: space-between;
+    width: 100%;
+  }
+  .list_time{
+    font-size:24rpx;
+    font-weight:400;
+    color:rgba(117,117,117,1);
+    margin:4rpx 0rpx 8rpx;
+  }
+  .list_detail_name{
+    font-size: 28rpx;
+    font-weight: 600;
+  }
+
+  .label_box{
+    justify-content: flex-start;
+
+  }
+  .label_list{
+    background:rgba(74,144,226,0.1);
+    border-radius:6px;
+    font-size:22rpx;
+    font-weight:600;
+    padding: 6rpx;
+    color:#4A90E2;
+    margin-right: 8rpx;
+  }
+  .list_detail_right{
+    align-self: flex-start;
+  }
 </style>
 <template>
   <view class="container">
-    <view class="flex header">
-      <view class="flex date">
-          <view style="color:#212121;font-size:72rpx;">4</view>
-          <view class="flex data_detail">
-              <view>2018年9月</view>
-              <view>星期二</view>
-          </view>
+    <view class="top">
+      <header></header>
+      <time></time>
+    </view>
+    <view class="content">
+      <view class="list_box" >
+        <view wx:for="{{7}}" wx:key='{{index}}'>
+            <view class="flex list">
+              <image class="list_title_img" src="../static/img/correct_active.png" wx:if='{{correct[index]}}' @tap='check_tag' data-id='{{index}}'></image>
+              <image class="list_title_img" src="../static/img/correct.png" wx:else @tap='check_tag' data-id='{{index}}'></image>
+              <navigator url="./task_details" style="width:100%;" hover-class='none'>
+                <view class="flex list_detail">
+                  <view class="list_detail_left">
+                    <view class="flex">
+                      <image style="height:28rpx;width:20rpx;margin-right:16rpx;" src="../static/img/red_flag.png" wx:if="{{true}}"></image>
+                      <!-- 已过期 -->
+                      <view class="list_detail_name" style="color:#F75A6F;">The Key To Your Motivation </view>
+
+                      <!-- 待完成 -->
+                      <!-- <view class="list_detail_name">The Key To Your Motivation </view> -->
+
+                      <!-- 未开始 -->
+                      <!-- <view class="list_detail_name" style='color:#CCCCCC;'>The Key To Your Motivation </view> -->
+
+                      <!-- 已完成 -->
+                      <!-- <view class="list_detail_name" style='text-decoration: line-through;color:#CCCCCC;'>The Key To Your Motivation </view> -->
+                    </view>
+                    <!-- 已过期 -->
+                    <!-- <view class="list_time" style='color:#F75A6F;'>已过期36分钟</view> -->
+
+                    <!-- 待完成 -->
+                    <!-- <view class="list_time" style="color:#757575;">18:00 结束</view> -->
+
+                    <!-- 未开始 -->
+                    <view class="list_time" style="color:#4A90E2;">19:00 开始</view>
+
+                    <view class="flex label_box">
+                      <view class="label_list">数学</view>
+                      <view class="label_list">学校作业</view>
+                    </view>
+                  </view>
+                </view>
+              </navigator>
+            </view>
+        </view>
       </view>
-      <image style="" src="http://img3.imgtn.bdimg.com/it/u=108228188,2741176027&fm=27&gp=0.jpg" ></image>
     </view>
-    <view class="flex prompt">
-      <view style='margin-right:32px;'>3条已完成</view>
-      <view >5条已完成</view>
-    </view>
+    <!-- 悬浮按钮 -->
+    <suspendBtn/>
+    <!--遮罩层 -->
+    <task />
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
   import { connect } from 'wepy-redux'
+  import Time from '../components/dealWith/Time'
+  import Header from '../components/dealWith/Header'
+  import SuspendBtn from '../components/dealWith/SuspendBtn'
+  import Task from '../components/dealWith/Task'
   @connect({
 
   })
@@ -60,10 +175,44 @@
       navigationBarTitleText: '兔do'
     }
     components = {
-
+      time:Time,
+      header:Header,
+      suspendBtn:SuspendBtn,
+      task:Task
     }
 
     data = {
+      week_days:[
+        {
+          week:'周一',
+          days:'01'
+        },
+        {
+          week:'Today',
+          days:'02'
+        },
+        {
+          week:'周三',
+          days:'01'
+        },
+        {
+          week:'周四',
+          days:'02'
+        },
+        {
+          week:'周五',
+          days:'01'
+        },
+        {
+          week:'周六',
+          days:'02'
+        },
+        {
+          week:'周日',
+          days:'02'
+        }
+      ],
+      correct:[]
 
     }
 
@@ -72,11 +221,17 @@
     }
 
     methods = {
+      check_tag:(e)=>{
+          this.correct[e.target.dataset.id]=!this.correct[e.target.dataset.id];
+      },
 
     }
 
     events = {
-
+      //控制模态窗
+      tag(){
+        this.$broadcast('_tag_modal');
+      }
     }
 
     onLoad() {

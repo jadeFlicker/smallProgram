@@ -1,0 +1,68 @@
+<style lang="scss">
+    .circle{
+      height: 66rpx;
+      width: 66rpx;
+      background: #3378E1;
+      border-radius: 50%;
+      margin:0rpx 35rpx 0rpx 29rpx;
+    }
+    .voice_box{
+      margin-top: 32rpx;
+      width:386rpx;
+      height:110rpx;
+      background:rgba(240,246,253,1);
+      justify-content: flex-start;
+      border-radius:55rpx;
+    }
+    .voice_time{
+      font-size:30rpx;
+      font-weight:300;
+      color:rgba(66,66,66,1);
+      line-height:42rpx;
+    }
+</style>
+<template>
+  <view class="flex voice_box">
+      <view class="flex circle">
+          <image style="height:26rpx;width:22rpx;" src="http://pic22.nipic.com/20120621/1628220_155636709122_2.jpg"></image>
+      </view>
+      <view class="voice_time">48 "</view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import { connect } from 'wepy-redux'
+
+
+  @connect({
+
+  })
+
+  export default class Counter extends wepy.component {
+    props = {
+      // num: {
+      //   type: [Number, String],
+      //   coerce: function (v) {
+      //
+      //   },
+      //   default:
+      // }
+    }
+
+    data = {
+    }
+    events = {
+
+    }
+
+    watch = {
+
+    }
+
+    methods = {
+      
+    }
+    onLoad () {
+    }
+  }
+</script>
