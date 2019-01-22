@@ -74,27 +74,46 @@
             border-bottom: 2rpx solid #eee;
           }
           .cot_exceptional{
-            height: 118rpx;
-            justify-content: space-between;
-            .friend_portrait image{
-                border-radius: 50%;
-            }
-            .friend_portrait_text{
+              height: 118rpx;
+              justify-content: space-between;
+              .friend_portrait image{
+                  border-radius: 50%;
+                  position: relative;
+              }
+              .friend_portrait_text{
+                  font-size:28rpx;
+                  font-weight:400;
+                  color:rgba(117,117,117,1);
+                  margin-left: 16rpx;
+              }
+              .portrait_btn{
+                width:148rpx;
+                height:64rpx;
+                border-radius:12rpx;
+                border:2rpx solid rgba(255,194,64,1);
                 font-size:28rpx;
+                font-weight:600;
+                color:rgba(255,194,64,1);
+              }
+          }
+          .cot_list_box{
+              background:rgba(245,246,247,1);
+              border-radius:24rpx;
+              padding: 24px;
+              padding-bottom: 8px;
+              .cot_list{
+                margin-bottom:16px;
+              }
+              .cot_list_name{
+                font-size:28rpx;
+                font-weight:500;
+                color:rgba(66,66,66,1);
+              }
+              .cot_list_content{
+                font-size:28rpx;
+                color:rgba(66,66,66,1);
                 font-weight:400;
-                color:rgba(117,117,117,1);
-                margin-left: 16rpx;
-            }
-            .portrait_btn{
-              width:148rpx;
-              height:64rpx;
-              border-radius:12rpx;
-              border:2rpx solid rgba(255,194,64,1);
-
-              font-size:28rpx;
-              font-weight:600;
-              color:rgba(255,194,64,1);
-            }
+              }
           }
       }
   }
@@ -138,12 +157,23 @@
           <view class="flex cot_exceptional">
               <view class="flex">
                   <view class="friend_portrait">
-                      <image style="height:48rpx;width:48rpx;" src="http://img1.imgtn.bdimg.com/it/u=3184725220,1179305695&fm=11&gp=0.jpg"></image>
-                      <image style="height:48rpx;width:48rpx;" src="http://img1.imgtn.bdimg.com/it/u=3184725220,1179305695&fm=11&gp=0.jpg"></image>
+                      <image wx:for="[3]" wx:key='{{index}}' style="height:48rpx;width:48rpx;left:-{{index*16}}rpx" src="http://img1.imgtn.bdimg.com/it/u=3184725220,1179305695&fm=11&gp=0.jpg"></image>
+
                   </view>
                   <view class="friend_portrait_text">5位好友已打赏</view>
               </view>
               <view class="flex portrait_btn">立即打赏</view>
+          </view>
+          <view class="cot_list_box">
+              <view class="flex cot_list">
+                <view class="cot_list_name">Emma：</view>
+                  <view class="cot_list_content">Adwords Keyword Research For Beginners</view>
+              </view>
+
+              <view class="flex cot_list">
+                <view class="cot_list_name">Emma：</view>
+                  <view class="cot_list_content">Adwords Keyword Research For Beginners</view>
+              </view>
           </view>
         </view>
     </view>

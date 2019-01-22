@@ -35,6 +35,7 @@
       <textarea/>
       <cameraMicrophone/>
     </view>
+
     <view class="flex release_btn">发布</view>
     <view class="release_btn release_btn_shadow"></view>
   </view>
@@ -73,7 +74,38 @@
 
     }
 
-    onLoad() {
+    async onLoad() {
+
+      // wx.login({
+      //   success:function(loginRes){
+      //
+      //     if(loginRes){
+      //       //获取用户信息
+      //       wx.getUserInfo({
+      //         success:function(infoRes){
+      //
+      //            wepy.request({
+      //               url:'http://192.168.31.112:8080/login/login',
+      //               method:'POST',
+      //               data:{
+      //                 encryptedData:infoRes.encryptedData,
+      //                 iv:infoRes.iv,
+      //                 code:loginRes.code,
+      //                 codeType:'123',
+      //                 rawData:infoRes.rawData
+      //               }
+      //            })
+      //            .then(res=>{
+      //              console.log('====',res);
+      //            })
+      //         },
+      //         fail:function(error){
+      //           console.log('///',error);
+      //         }
+      //       })
+      //     }
+      //   }
+      // })
     }
   }
 </script>

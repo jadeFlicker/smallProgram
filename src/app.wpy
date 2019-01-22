@@ -65,7 +65,8 @@ export default class extends wepy.app {
 
   constructor () {
     super()
-    this.use('requestfix')
+    this.use('requestfix');
+    this.use('promisify');
   }
 
   onLaunch() {
@@ -80,6 +81,7 @@ export default class extends wepy.app {
     }
     wepy.getUserInfo({
       success (res) {
+        console.log('==',res)
         that.globalData.userInfo = res.userInfo
         cb && cb(res.userInfo)
       }

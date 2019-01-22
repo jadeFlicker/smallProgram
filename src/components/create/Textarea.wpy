@@ -8,11 +8,12 @@
     font-size:32rpx;
     font-weight:400;
     color:rgba(66,66,66,1);
+
   }
 </style>
 <template>
   <view class="textarea_box">
-    <textarea  maxlength='140' style="width:100%;" placeholder="你希望做什么" placeholder-style="color:#CCCCCC;font-size:32rpx;font-weight:400;"/>
+    <textarea  maxlength='140' style="width:100%;height:176rpx;" placeholder="你希望做什么" placeholder-style="color:#CCCCCC;font-size:32rpx;font-weight:400;"/>
   </view>
 </template>
 <script>

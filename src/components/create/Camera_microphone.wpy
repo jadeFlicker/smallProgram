@@ -1,4 +1,8 @@
 <style lang="scss">
+  page{
+    position: relative;
+
+  }
   .Mic_box{
     height: 140rpx;
     width: 140rpx;
@@ -6,7 +10,7 @@
     border:2px solid rgba(238,238,238,1);
   }
   //录音模块
-  .vioce_end_box{
+  .vioce_end_box,.vioce_start_box{
     height:110rpx;
     background:rgba(255,255,255,1);
     border-radius:55rpx;
@@ -39,10 +43,12 @@
   }
   .voice_time_active{
     margin-left: 16rpx;
+    margin-right: 16rpx;
+    width: 70rpx;
   }
   .active_line_box{
-    margin-left: 16rpx;
-    position: relative;
+
+    // position: relative;
   }
   .active_line{
     width: 362rpx;
@@ -79,33 +85,79 @@
     width: 32rpx;
     border-radius: 50%;
   }
+
+  .vioce_start_box{
+      justify-content: space-between;
+      box-sizing: border-box;
+
+  }
+  .vs_time{
+      margin-left: 32rpx;
+      margin-right: 16rpx;
+      font-size:36rpx;
+      font-weight:600;
+      width: 100rpx;
+      color:rgba(255,110,128,1);
+  }
+  .vs_left,.vs_right{
+      align-self:stretch;
+  }
+  .vs_determine {
+      margin-left: 32rpx;
+      font-size:32rpx;
+      font-weight:600;
+      color:rgba(51,120,225,1);
+      padding-right:40rpx;
+      align-self:stretch;
+  }
+  .vs_cancle{
+      align-self:stretch;
+      width:68rpx;
+      justify-content: flex-end;
+  }
 </style>
 <template>
   <view>
-    <!-- 录音结束 -->
-      <view class="flex vioce_end_box">
+    <!-- 录音完毕播放录音 -->
+      <view class="flex vioce_end_box" wx:if="{{voice_state}}">
 
-          <image class="voice_cancal" src="../../static/img/canclex.png"></image>
+          <image class="voice_cancal" src="../../static/img/canclex.png" @tap="voice_delete"></image>
 
-        <image class="voice_tag_btn" src="../../static/img/play.png"></image>
+          <image class="voice_tag_btn" src="../../static/img/play.png" wx:if="{{voice_icon}}" @tap="voice_tag"></image>
+          <image class="voice_tag_btn" src="../../static/img/tentative.png" wx:else @tap="voice_tag"></image>
 
-        <view class="voice_time_active">00:00</view>
-        <view class="flex active_line_box">
-            <view class="active_line"></view>
-            <view class="active_point"></view>
-        </view>
-        <view class="voice_time_all">00:58</view>
+          <view class="voice_time_active">{{voice_current_time}}</view>
+
+          <view class="flex active_line_box" @tap='process_tap' style="align-self:stretch;">
+
+              <view class="active_line" ></view>
+
+
+              <view class="active_point" style="left:{{ratio}}rpx" @touchmove='point_move'></view>
+          </view>
+
+          <view class="voice_time_all">{{recording_format_time}}</view>
       </view>
-      <!-- 录音开始 -->
-      <view class="vioce_start_box">
+      <!-- 进行录音 -->
+      <view class="flex vioce_start_box" wx:if='{{recording_state}}'>
+          <view class="flex vs_left">
+              <view class="flex vs_cancle" @tap="recording_delete"><image src="../../static/img/delete_voice.png" style="height:28rpx;width:28rpx;" ></image></view>
+              <view class="vs_time">{{recording_format_time}}</view>
+              <image style="height:24rpx;width:84rpx;" src="../../static/img/sonic.png"></image>
 
+          </view>
+          <view class="flex vs_right">
+              <image style="height:66rpx;width:64rpx;" src="../../static/img/red_play.png" wx:if="{{recording_icon}}" @tap="recording_tag"></image>
+              <image style="height:66rpx;width:64rpx;" src="../../static/img/red_tentative.png" wx:else @tap="recording_tag"></image>
+              <view class='flex vs_determine' @tap='recording_determine'>确定</view>
+          </view>
       </view>
       <view class="flex img_box">
         <view class="img_box_list">
 
             <image class="img_cancal"  src="../../static/img/canclex.png"></image>
 
-          <image style="height:144rpx;width:144rpx;" src="http://img1.imgtn.bdimg.com/it/u=3184725220,1179305695&fm=11&gp=0.jpg"></image>
+            <image style="height:144rpx;width:144rpx;" src="http://img1.imgtn.bdimg.com/it/u=3184725220,1179305695&fm=11&gp=0.jpg"></image>
         </view>
         <view class="img_box_list">
 
@@ -118,8 +170,8 @@
         <view class="flex Mic_box" @tap='create_camera'>
           <image style="height:76rpx;width:76rpx;" src="../../static/img/camera.png"></image>
         </view>
-        <view class="flex Mic_box" @tap='create_voice'>
-          <image style="height:76rpx;width:76rpx;" src="../../static/img/voice.png"></image>
+        <view class="flex Mic_box" @tap='create_voice' wx:if='{{!recording_state&&!voice_state}}'>
+          <image style="height:76rpx;width:76rpx;" src="../../static/img/voice.png" ></image>
         </view>
       </view>
   </view>
@@ -133,24 +185,189 @@
     }
 
     data = {
+      voice_icon:false,
+      voice_state:false,
+      recording_icon:true,
+      recording_state:false,
+      recorderManager:{},//录音对象
+      recording_start_time:0,//录音数字时间
+      recording_format_time:'00:00',// 录音格式时间
+      Recorder_Time:{},//录音时间函数
+      Recorder_File:'',// 录音文件路径
+      audioCtx:{},//音频对象
+      voice_current_time:'00:00',//音频播放时间
+      ratio:-10,//音频播放进度条距离
     }
     events = {
 
     }
 
     watch = {
-
+        recording_start_time(val){
+            let sec=val%60>9?val%60:'0'+val%60;
+            let min=val/60>9?parseInt(val/60):'0'+parseInt(val/60);
+            this.recording_format_time=`${min}:${sec}`;
+            this.Recorder_File='';
+        }
+    }
+    RecorderTime(){
+          clearInterval(this.Recorder_Time);
+          this.Recorder_Time=setInterval(()=>{
+              this.recording_start_time++;
+              this.$apply();
+          },1000);
     }
 
     methods = {
+      point_move:(e)=>{
+        console.log(e);
+          console.log('==///',e.currentTarget.offsetLeft+5);
+
+      },
+      process_tap:(e)=>{
+          console.log(e);
+          this.voice_icon=true;
+
+          let position_time= (e.changedTouches[0].pageX-e.currentTarget.offsetLeft)*2/362*this.audioCtx.duration;
+
+          this.audioCtx.seek(position_time)
+          this.audioCtx.play();
+      },
+      voice_delete:async ()=>{
+          await this.clearStorge();
+          this.recording_state=false;
+          this.voice_state=false;
+          this.ratio=-10;
+          this.voice_icon=false;
+          this.$apply();
+      },
+      voice_tag:()=>{
+          this.voice_icon=!this.voice_icon;
+          if (this.voice_icon) {
+              this.audioCtx.play();
+
+          }else{
+              this.audioCtx.pause();
+          }
+      },
+      recording_delete:()=>{
+          this.recording_state=false;
+          // 删除时 初始化录音时间
+          this.recording_start_time=0;
+          this.recorderManager.stop();
+
+      },
+      recording_tag:()=>{
+          this.recording_icon=!this.recording_icon;
+          if (this.recording_icon) {
+              this.recorderManager.resume();
+          }else{
+              this.recorderManager.pause();
+          }
+      },
+      recording_determine:()=>{
+
+          this.recorderManager.stop();
+
+      },
       create_camera:()=>{
-        console.log('====');
+          console.log('====');
       },
       create_voice:()=>{
-        console.log('====///');
-      }
+
+          // const options = {
+          //     format: 'mp3'
+          // }
+
+          // this.recorderManager.start(options);
+          this.recorderManager.start();
+      },
     }
-    onLoad () {
+    // 清除音频文件缓存
+    async clearStorge(){
+      await wepy.getSavedFileList()
+      .then(res=>{
+          if (res.fileList.length>0) {
+              res.fileList.forEach(async item=>{
+                await wepy.removeSavedFile({
+                    filePath: item.filePath
+                })
+              })
+          }
+      })
+    }
+    async onLoad () {
+        await this.clearStorge();
+        // 音频文件上下文对象
+        this.audioCtx = wepy.createInnerAudioContext();
+        // 录音上下文对象
+        this.recorderManager = wepy.getRecorderManager();
+        //录音模块
+        // 开始录音
+        this.recorderManager.onStart(() => {
+
+            this.recording_state=true;
+            this.recording_start_time=0;
+            this.RecorderTime();
+            this.$apply();
+        })
+        // 录音暂停
+        this.recorderManager.onPause(() => {
+            clearInterval(this.Recorder_Time);
+        })
+        // 录音暂停继续
+        this.recorderManager.onResume(() => {
+            this.RecorderTime();
+        })
+        // 录音停止
+        this.recorderManager.onStop((file) => {
+            // 确定时 清除定时器
+            clearInterval(this.Recorder_Time);
+            if (!this.recording_state) return
+
+            wepy.saveFile({
+                tempFilePath:file.tempFilePath,
+            })
+            .then(res=>{
+                // 本地存储文件
+                this.Recorder_File=res.savedFilePath;
+                // 音频文件赋值
+                this.audioCtx.src=res.savedFilePath;
+                // 存储完成UI状态变化
+                this.recording_state=false;
+                this.voice_state=true;
+                this.$apply();
+            })
+        })
+        // 监听录音出错方法
+        this.recorderManager.onError(()=>{
+
+            wepy.showToast({
+               title:'录音出错'
+            })
+        })
+        // 音频模块
+        this.audioCtx.onPlay(()=>{
+            console.log('==播放');
+        })
+
+        this.audioCtx.onPause(()=>{
+            console.log('停止')
+        })
+
+        this.audioCtx.onEnded(()=>{
+            this.voice_icon=!this.voice_icon;
+            this.$apply();
+        })
+        this.audioCtx.onTimeUpdate(()=>{
+
+            let val=this.audioCtx.currentTime;
+            let sec=parseInt(val%60)>9?parseInt(val%60):'0'+parseInt(val%60);
+            let min=parseInt(val/60>9)?parseInt(val/60):'0'+parseInt(val/60);
+            this.voice_current_time=`${min}:${sec}`;
+            this.ratio=parseInt(val/this.audioCtx.duration*362-10);
+            this.$apply();
+        })
     }
   }
 </script>

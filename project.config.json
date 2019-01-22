@@ -1,7 +1,7 @@
 {
 	"description": "A WePY project",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": false,
 		"minified": false,
@@ -10,6 +10,7 @@
 	"compileType": "miniprogram",
 	"appid": "wxd17d7a4613908cfa",
 	"projectname": "todo",
-	"miniprogramRoot": "./dist",
+	"miniprogramRoot": "dist/",
+	"libVersion": "2.5.0",
 	"condition": {}
 }

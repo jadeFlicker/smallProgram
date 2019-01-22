@@ -40,13 +40,7 @@
 
   export default class Counter extends wepy.component {
     props = {
-      // num: {
-      //   type: [Number, String],
-      //   coerce: function (v) {
-      //
-      //   },
-      //   default:
-      // }
+
     }
 
     data = {
@@ -60,7 +54,7 @@
     }
 
     methods = {
-      
+
     }
     onLoad () {
     }
